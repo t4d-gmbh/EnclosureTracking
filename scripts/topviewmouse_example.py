@@ -22,7 +22,7 @@ def main(video_path:str, superanimal_name:str, scale_list) -> None:
 
 if __name__ == '__main__':
     video_path = 'demo-video.mp4'
-    superanimal_name = 'superanimal_quadruped_dlcrnet'
+    superanimal_name = 'superanimal_topviewmouse'
 
     scale_list = range(50, 200, 50)
 
