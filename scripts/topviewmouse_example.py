@@ -26,7 +26,7 @@ if __name__ == '__main__':
     # Set up argument parsing
     parser = argparse.ArgumentParser(description='Analyze video using DeepLabCut ModelZoo.')
     parser.add_argument('video_path', type=str, help='Path to the video to analyze')
-    parser.add_argument('superanimal_name', type=str,
+    parser.add_argument('--superanimal_name', type=str,
                         default="superanimal_topviewmouse",
                         help='Identifier of the pretrained model to use')
     parser.add_argument('--scale_list', type=int, nargs='+', default=list(range(50, 200, 50)),
