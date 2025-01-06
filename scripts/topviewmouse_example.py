@@ -1,8 +1,13 @@
 import argparse
-import deeplabcut as dlc
+from deeplabcut.modelzoo.video_inference import video_inference_superanimal
 
 
-def main(video_path: str, superanimal_name: str, scale_list) -> None:
+def main(video_path: str,
+         superanimal_name: str,
+         model_name: str,
+         detector_name: str,
+         max_individuals: int
+         ) -> None:
     """Use ModelZoo to detect poses
 
     Parameters
@@ -11,14 +16,19 @@ def main(video_path: str, superanimal_name: str, scale_list) -> None:
       Path to the video to analyze
     superanimal_name:
       Identifier of the pretrained model to use
-    scale_list:
-      A collection of mouse sizes (in # pixels) to test
     """
-
-    dlc.video_inference_superanimal([video_path],
-                                    superanimal_name,
-                                    scale_list=scale_list,
-                                    video_adapt=False)
+    video_inference_superanimal(
+        videos=[video_path],
+        superanimal_name=superanimal_name,
+        model_name=model_name,
+        detector_name=detector_name,
+        max_individuals=max_individuals,
+        video_adapt=True,
+        pseudo_threshold=0.1,
+        bbox_threshold=0.9,
+        detector_epochs=4,
+        pose_epochs=4,
+        )
     return None
 
 
@@ -29,6 +39,15 @@ if __name__ == '__main__':
     parser.add_argument('--superanimal_name', type=str,
                         default="superanimal_topviewmouse",
                         help='Identifier of the pretrained model to use')
+    parser.add_argument('--model_name', type=str,
+                        default="hrnet_w32",
+                        help='What network model to use')
+    parser.add_argument('--detector_name', type=str,
+                        default="fasterrcnn_resnet50_fpn_v2",
+                        help='What model to use to detect animals')
+    parser.add_argument('--max_individuals', type=int,
+                        default=3,
+                        help='How many different individuals are maxiamally visible')
     parser.add_argument('--scale_list', type=int, nargs='+', default=list(range(50, 200, 50)),
                         help='A collection of mouse sizes (in # pixels) to test (default: 50 100 150)')
 
@@ -38,4 +57,8 @@ if __name__ == '__main__':
     # Call the main function with parsed arguments
     main(video_path=args.video_path,
          superanimal_name=args.superanimal_name,
-         scale_list=args.scale_list)
+         scale_list=args.scale_list
+         model_name=args.model_name,
+         detector_name=args.detector_name,
+         max_individuals=args.max_individuals,
+         )
