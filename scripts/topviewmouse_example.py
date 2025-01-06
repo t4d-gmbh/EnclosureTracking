@@ -48,8 +48,6 @@ if __name__ == '__main__':
     parser.add_argument('--max_individuals', type=int,
                         default=3,
                         help='How many different individuals are maxiamally visible')
-    parser.add_argument('--scale_list', type=int, nargs='+', default=list(range(50, 200, 50)),
-                        help='A collection of mouse sizes (in # pixels) to test (default: 50 100 150)')
 
     # Parse the arguments
     args = parser.parse_args()
@@ -57,7 +55,6 @@ if __name__ == '__main__':
     # Call the main function with parsed arguments
     main(video_path=args.video_path,
          superanimal_name=args.superanimal_name,
-         scale_list=args.scale_list
          model_name=args.model_name,
          detector_name=args.detector_name,
          max_individuals=args.max_individuals,
