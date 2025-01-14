@@ -1,12 +1,12 @@
 import argparse
 from deeplabcut.modelzoo.video_inference import video_inference_superanimal
 
-
 def main(video_path: str,
          superanimal_name: str,
          model_name: str,
          detector_name: str,
-         max_individuals: int
+         max_individuals: int,
+         **kwargs
          ) -> None:
     """Use ModelZoo to detect poses
 
@@ -22,15 +22,8 @@ def main(video_path: str,
         superanimal_name=superanimal_name,
         model_name=model_name,
         detector_name=detector_name,
-        detector_batch_size=4,
         max_individuals=max_individuals,
-        video_adapt=True,
-        batch_size=4,
-        video_adapt_batch_size=4,
-        pseudo_threshold=0.1,
-        bbox_threshold=0.9,
-        detector_epochs=8,
-        pose_epochs=8,
+        **kwargs
         )
     return None
 
@@ -55,10 +48,29 @@ if __name__ == '__main__':
     # Parse the arguments
     args = parser.parse_args()
 
+    # setting all parameters
+    params = dict(
+        detector_batch_size=4,
+        video_adapt=True,
+        batch_size=4,
+        video_adapt_batch_size=4,
+        pseudo_threshold=0.1,
+        bbox_threshold=0.9,
+        detector_epochs=8,
+        pose_epochs=8,
+    )
+    
+    # echo params
+    print(f"{args=}")
+    for k,v in params.items():
+        print(f"{k}={v}")
+
+
     # Call the main function with parsed arguments
     main(video_path=args.video_path,
          superanimal_name=args.superanimal_name,
          model_name=args.model_name,
          detector_name=args.detector_name,
          max_individuals=args.max_individuals,
+         **params
          )
