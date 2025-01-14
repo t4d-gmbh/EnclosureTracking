@@ -57,7 +57,7 @@ if __name__ == '__main__':
                         default=3,
                         help='How many different individuals are maximally visible')
     parser.add_argument('--device', type=str,
-                        default='gpu',
+                        default='auto',
                         help='What device to use')
     # Parse the arguments
     args = parser.parse_args()
