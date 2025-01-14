@@ -56,7 +56,7 @@ if __name__ == '__main__':
     parser.add_argument('--max_individuals', type=int,
                         default=3,
                         help='How many different individuals are maximally visible')
-    parser.add_argument('--device', type=int,
+    parser.add_argument('--device', type=str,
                         default='gpu',
                         help='What device to use')
     # Parse the arguments
