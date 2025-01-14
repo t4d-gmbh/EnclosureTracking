@@ -22,7 +22,7 @@ def main(video_path: str,
       Identifier of the pretrained model to use
     """
     out_dir = Path(dest_folder)
-    if nod out_dir.exists():
+    if not out_dir.exists():
         warnings.warn(f"Creating new directory {str(out_dir)}")
         out_dir.mkdir(parents=True)
 
