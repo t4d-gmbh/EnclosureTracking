@@ -1,7 +1,10 @@
+import warnings
 import argparse
+from pathlib import Path
 from deeplabcut.modelzoo.video_inference import video_inference_superanimal
 
 def main(video_path: str,
+         dest_folder: str,
          superanimal_name: str,
          model_name: str,
          detector_name: str,
@@ -18,6 +21,11 @@ def main(video_path: str,
     superanimal_name:
       Identifier of the pretrained model to use
     """
+    out_dir = Path(dest_folder)
+    if nod out_dir.exists():
+        warnings.warn(f"Creating new directory {str(out_dir)}")
+        out_dir.mkdir(parents=True)
+
     video_inference_superanimal(
         videos=[video_path],
         superanimal_name=superanimal_name,
@@ -74,6 +82,7 @@ if __name__ == '__main__':
 
     # Call the main function with parsed arguments
     main(video_path=args.video_path,
+         dest_folder=args.dest_folder,
          superanimal_name=args.superanimal_name,
          model_name=args.model_name,
          detector_name=args.detector_name,
