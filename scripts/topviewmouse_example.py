@@ -82,6 +82,7 @@ if __name__ == '__main__':
 
     # Call the main function with parsed arguments
     main(video_path=args.video_path,
+         device=args.device,
          dest_folder=args.dest_folder,
          superanimal_name=args.superanimal_name,
          model_name=args.model_name,
