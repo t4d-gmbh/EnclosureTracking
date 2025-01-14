@@ -6,6 +6,7 @@ def main(video_path: str,
          model_name: str,
          detector_name: str,
          max_individuals: int,
+         device: str,
          **kwargs
          ) -> None:
     """Use ModelZoo to detect poses
@@ -23,6 +24,7 @@ def main(video_path: str,
         model_name=model_name,
         detector_name=detector_name,
         max_individuals=max_individuals,
+        device=device,
         **kwargs
         )
     return None
@@ -32,6 +34,8 @@ if __name__ == '__main__':
     # Set up argument parsing
     parser = argparse.ArgumentParser(description='Analyze video using DeepLabCut ModelZoo.')
     parser.add_argument('video_path', type=str, help='Path to the video to analyze')
+    parser.add_argument('--dest_folder', type=str,
+                        help='Where to store the results')
     parser.add_argument('--superanimal_name', type=str,
                         default="superanimal_topviewmouse",
                         help='Identifier of the pretrained model to use')
@@ -43,8 +47,10 @@ if __name__ == '__main__':
                         help='What model to use to detect animals')
     parser.add_argument('--max_individuals', type=int,
                         default=3,
-                        help='How many different individuals are maxiamally visible')
-
+                        help='How many different individuals are maximally visible')
+    parser.add_argument('--device', type=int,
+                        default='gpu',
+                        help='What device to use')
     # Parse the arguments
     args = parser.parse_args()
 
@@ -54,7 +60,7 @@ if __name__ == '__main__':
         video_adapt=True,
         batch_size=4,
         video_adapt_batch_size=4,
-        pseudo_threshold=0.1,
+        pseudo_threshold=0.05,
         bbox_threshold=0.9,
         detector_epochs=8,
         pose_epochs=8,
