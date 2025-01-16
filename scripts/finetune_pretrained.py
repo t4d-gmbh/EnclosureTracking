@@ -33,13 +33,16 @@ config_path = get_config_path(working_dir=working_dir,
 # ###
 # 2. Label some images
 # ###
+# 2.1. Label images
 # NOTE: This is best done using the GUI.
 #       Simply open a new terminal and run:
 #       `ipython -m deeplabcut`.
 #       Then load the project (i.e. open the
 #       config.yaml and go to the panel 'label data'
 #       (or similar)
-# 2.2. Checking the labels
+# 2.2. Assert the right scorer is used (why track this at all??)
+dlc.convertcsv2h5(config_path, scorer=user)
+# 2.3. Checking the labels
 dlc.check_labels(config_path, visualizeindividuals=True)
 
 # ###
