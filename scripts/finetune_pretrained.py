@@ -26,7 +26,7 @@ project_name = "PretrainedTracker"
 model = "superanimal_topviewmouse"
 path_to_videos = f"/home/{user}/data/samples"
 
-config_path = get_ocnfig_path(working_dir=working_dir,
+config_path = get_config_path(working_dir=working_dir,
                               project_name=project_name,
                               user=user)
 
