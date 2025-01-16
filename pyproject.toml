@@ -1,5 +1,5 @@
 [project]
-name = "EnclosureTracking"
+name = "enctracking"
 authors = [
   { name="Jonas I. Liechti", email="j-i-l@t4d.ch" },
 ]
