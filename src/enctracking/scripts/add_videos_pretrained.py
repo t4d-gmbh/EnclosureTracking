@@ -35,7 +35,7 @@ def add_videos(user, working_dir, project_name, videos_to_add):
                                   project_name=project_name,
                                   user=user)
 
-    dlc.add_new_videso(config=config_path,
+    dlc.add_new_videos(config=config_path,
                        videos=videos_to_add)
 
 def get_args():
