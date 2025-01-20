@@ -33,7 +33,7 @@ This script creates a new DeepLabCut project using a pretrained model and prepar
 init_pretrained --user <username> --working_dir <path> --project_name <project_name> --model <model_name> --path_to_videos <path_to_videos>
 ```
 
-### 2. `add_videos.py`
+### 2. `add_videos`
 This script adds new video files to an existing DeepLabCut project.
 
 **Key Steps:**
@@ -42,7 +42,7 @@ This script adds new video files to an existing DeepLabCut project.
 
 **Usage:**
 ```
-python -m enctracking.add_videos --user <username> --working_dir <path> --project_name <project_name> --path_to_videos <path> --videos_to_add <video1> <video2> ...
+add_videos --user <username> --working_dir <path> --project_name <project_name> --videos_to_add <video1> <video2> ...
 ```
 
 ### 3. `evaluate_pretrained.py`

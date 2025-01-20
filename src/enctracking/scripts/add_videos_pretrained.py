@@ -3,19 +3,14 @@
 This is an optional second step after running the init_pretrained.py script.
 """
 
-import os
-import glob
-import warnings
 import deeplabcut as dlc
 import argparse
 
 from ..helpers import (
-    parts_mapping,
-    to_pretrained_multianimal,
     get_config_path,
 )
 
-def main(user, working_dir, project_name, path_to_videos, videos_to_add):
+def add_videos(user, working_dir, project_name, videos_to_add):
     """Add new video files to an existing DeepLabCut project.
 
     This function performs the following steps:
@@ -43,7 +38,9 @@ def main(user, working_dir, project_name, path_to_videos, videos_to_add):
     dlc.add_new_videso(config=config_path,
                        videos=videos_to_add)
 
-if __name__ == "__main__":
+def get_args():
+    """Fetch command line arguments
+    """
     parser = argparse.ArgumentParser(
         description="Add new video files to an existing DeepLabCut project.",
         formatter_class=argparse.RawTextHelpFormatter
@@ -51,7 +48,6 @@ if __name__ == "__main__":
     parser.add_argument('--user', type=str, default='ml_user', help='Username for the project.')
     parser.add_argument('--working_dir', type=str, default='/home/ml_user', help='Working directory for the project.')
     parser.add_argument('--project_name', type=str, default='PretrainedTracker', help='Name of the existing project.')
-    parser.add_argument('--path_to_videos', type=str, default='/home/ml_user/data/samples', help='Path to the directory containing the videos.')
     parser.add_argument('--videos_to_add', type=str, nargs='+', required=True, help='List of video files to add to the project.')
 
     # Add example usage to the help message
@@ -63,6 +59,15 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+    
+    return args
 
-    main(args.user, args.working_dir, args.project_name, args.path_to_videos,
-         args.videos_to_add)
+def main():
+    """Script entrypoint
+    """
+    args = get_args()
+    add_videos(user=args.user, working_dir=args.working_dir,
+               project_name=args.project_name, videos_to_add=args.videos_to_add)
+
+if __name__ == "__main__":
+    main()
