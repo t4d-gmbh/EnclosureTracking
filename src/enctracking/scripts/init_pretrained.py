@@ -42,17 +42,22 @@ def init_pretrained(user:str, working_dir:str, project_name:str, model:str, path
         Exception: If there is an error during project creation or configuration.
     """
     # Create a project with a pre-trained model
-    dlc.create_pretrained_project(
-        project=project_name,
-        experimenter=user,
-        videos=[path_to_videos],
-        working_directory=working_dir,
-        model=model,
-        copy_videos=False,
-        filtered=False,  # False: frame-by-frame predictions
-        createlabeledvideo=True,
-        trainFraction=0.95  # 0.95 is the default
-    )
+    try:
+        dlc.create_pretrained_project(
+            project=project_name,
+            experimenter=user,
+            videos=[path_to_videos],
+            working_directory=working_dir,
+            model=model,
+            copy_videos=False,
+            filtered=False,  # False: frame-by-frame predictions
+            createlabeledvideo=True,
+            trainFraction=0.95  # 0.95 is the default
+        )
+    except FileNotFoundError as e:
+        warnings.warn("During project creation the following error occured:\n"
+                      f"{e}\nNote: To the best of our understanding this is "
+                      " currently unavoidalbe and the error is simply ignored")
 
     config_path = get_config_path(working_dir=working_dir,
                                   project_name=project_name,
