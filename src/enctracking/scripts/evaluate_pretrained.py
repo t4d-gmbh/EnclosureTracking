@@ -7,12 +7,10 @@ import deeplabcut as dlc
 import argparse
 
 from ..helpers import (
-    parts_mapping,
-    to_pretrained_multianimal,
     get_config_path,
 )
 
-def main(user, working_dir, project_name, model):
+def evaluate_pretrained(user:str, working_dir:str, project_name:str):
     """Evaluate a trained DeepLabCut model.
 
     This function performs the following steps:
@@ -38,7 +36,9 @@ def main(user, working_dir, project_name, model):
 
     dlc.evaluate_network(config=config_path, plotting=True)
 
-if __name__ == "__main__":
+def get_args():
+    """Fetch command line arguments
+    """
     parser = argparse.ArgumentParser(
         description="Post-training steps to evaluate a trained DeepLabCut model.",
         formatter_class=argparse.RawTextHelpFormatter
@@ -46,7 +46,6 @@ if __name__ == "__main__":
     parser.add_argument('--user', type=str, default='ml_user', help='Username for the project.')
     parser.add_argument('--working_dir', type=str, default='/home/ml_user', help='Working directory for the project.')
     parser.add_argument('--project_name', type=str, default='PretrainedTracker', help='Name of the existing project.')
-    parser.add_argument('--model', type=str, default='superanimal_topviewmouse', help='Name of the pretrained model to evaluate.')
 
     # Add example usage to the help message
     parser.epilog = (
@@ -56,5 +55,15 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+    
+    return args
 
-    main(args.user, args.working_dir, args.project_name, args.model)
+def main():
+    """Script entrypoint
+    """
+    args = get_args()
+    evaluate_pretrained(args.user, args.working_dir, args.project_name)
+
+
+if __name__ == "__main__":
+    main()

@@ -41,7 +41,7 @@ This script adds new video files to an existing DeepLabCut project.
 add_videos --user <username> --working_dir <path> --project_name <project_name> --videos_to_add <video1> <video2> ...
 ```
 
-### 3. `evaluate_pretrained.py`
+### 3. `evaluate_pretrained`
 This script evaluates a trained DeepLabCut model.
 
 **Key Steps:**
@@ -50,7 +50,7 @@ This script evaluates a trained DeepLabCut model.
 
 **Usage:**
 ```
-python -m enctracking.evaluate_pretrained --user <username> --working_dir <path> --project_name <project_name> --model <model_name>
+evaluate_pretrained --user <username> --working_dir <path> --project_name <project_name>
 ```
 
 ### 4. `finetune_pretrained`
