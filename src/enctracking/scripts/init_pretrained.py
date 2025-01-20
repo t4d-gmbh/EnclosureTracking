@@ -7,14 +7,11 @@ https://deeplabcut.github.io/DeepLabCut/docs/maDLC_UserGuide.html
 
 from typing import Collection
 
-import os
-import glob
 import warnings
 import deeplabcut as dlc
 import argparse
 
 from ..helpers import (
-    parts_mapping,
     to_pretrained_multianimal,
     get_config_path,
 )
