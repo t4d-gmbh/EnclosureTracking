@@ -20,8 +20,11 @@ file = ["requirements.txt"]
 Homepage = "https://github.com/t4d-gmbh/EnclosureTracking"
 Issues = "https://github.com/t4d-gmbh/EnclosureTracking/issues"
 
-# [project.scripts]
-# landiv = "landiv_blur.scripts.parallel_filter:main"
+[project.scripts]
+init_pretrained = "enctracking.scripts.init_pretrained:main"
+add_videos = "enctracking.scripts.add_videos:main"
+evaluate_pretrained = "enctracking.scripts.evaluate_pretrained:main"
+track_individuals = "enctracking.scripts.track_individuals:main"
 
 [tool.setuptools]
 include-package-data = false
