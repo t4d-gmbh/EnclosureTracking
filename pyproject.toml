@@ -22,9 +22,10 @@ Issues = "https://github.com/t4d-gmbh/EnclosureTracking/issues"
 
 [project.scripts]
 init_pretrained = "enctracking.scripts.init_pretrained:main"
-add_videos = "enctracking.scripts.add_videos:main"
+add_videos = "enctracking.scripts.add_videos_pretrained:main"
+finetune_pretrained= "enctracking.scripts.add_videos_pretrained:main"
 evaluate_pretrained = "enctracking.scripts.evaluate_pretrained:main"
-track_individuals = "enctracking.scripts.track_individuals:main"
+track_individuals = "enctracking.scripts.tracking_pretrained:main"
 
 [tool.setuptools]
 include-package-data = false

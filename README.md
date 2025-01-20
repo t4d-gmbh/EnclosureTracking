@@ -57,7 +57,20 @@ This script evaluates a trained DeepLabCut model.
 python -m enctracking.evaluate_pretrained --user <username> --working_dir <path> --project_name <project_name> --model <model_name>
 ```
 
-### 4. `track_individuals.py`
+### 4. `finetune_pretrained`
+This script performs training (a fine-tuning) of the pretrained model.
+
+**Key Steps:**
+- Retrieve the configuration path for the specified project.
+- Analyze the specified videos to track individuals.
+- Create annotated videos to check the performance of the tracking.
+
+**Usage:**
+```
+finetune_pretrained --user <username> --working_dir <path> --project_name <project_name> --model <model_name> --path_to_videos <path> --videos_to_analyze <video1> <video2> ...
+```
+
+### 5. `track_individuals.py`
 This script performs tracking of individuals in a video.
 
 **Key Steps:**
