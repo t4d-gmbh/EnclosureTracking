@@ -62,15 +62,13 @@ This script evaluates a trained DeepLabCut model.
 **Key Steps:**
 - Retrieve the configuration path for the specified project.
 - Evaluate the trained model using the specified configuration.
-- Analyze the specified videos to track individuals.
-- Create annotated videos to check the performance of the tracking.
 
 **Usage:**
 ```
 evaluate_pretrained --user <username> --working_dir <path> --project_name <project_name>
 ```
 
-### 5. `track_individuals.py`
+### 5. `tracking_pretrained`
 This script performs tracking of individuals in a video.
 
 **Key Steps:**
@@ -80,13 +78,12 @@ This script performs tracking of individuals in a video.
 
 **Usage:**
 ```
-python -m enctracking.track_individuals --user <username> --working_dir <path> --project_name <project_name> --model <model_name> --path_to_videos <path> --videos_to_analyze <video1> <video2> ...
+tracking_pretrained --user <username> --working_dir <path> --project_name <project_name> --batc_size <nbr> --videos_to_analyze <video1> <video2> ...
 ```
 
 ## Requirements
-- DeepLabCut
-- Python 3.x
-- Required libraries as specified in the project.
+- DeepLabCut (DLC 3.0)
+- Python 3.11
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
