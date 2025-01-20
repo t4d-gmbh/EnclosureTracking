@@ -5,35 +5,30 @@ This tries to follow:
 https://deeplabcut.github.io/DeepLabCut/docs/maDLC_UserGuide.html
 """
 
-import os
-import glob
-import warnings
 import deeplabcut as dlc
 import argparse
 
 from ..helpers import (
     parts_mapping,
-    to_pretrained_multianimal,
     get_config_path,
 )
 
-def main(user, working_dir, project_name, model, path_to_videos):
+def finetune_pretrained(user:str, working_dir:str, project_name:str, model:str,
+                        batch_size:int):
     """Create a DeepLabCut project, label images, create a training dataset, and train the network.
 
     This function performs the following steps:
-    1. Creates a new DeepLabCut project with a pre-trained model.
-    2. Labels images using the GUI (this step is recommended to be done manually).
-    3. Converts the labeled data to the required format.
-    4. Checks the labels for correctness.
-    5. Creates a training dataset by mapping markers.
-    6. Trains the network using the specified parameters.
+    1. Converts labeled data to the required format.
+    2. Checks the labels for correctness.
+    3. Creates a training dataset by mapping markers.
+    4. Trains the network using the specified parameters.
 
     Args:
         user (str): The username of the experimenter for the project.
         working_dir (str): The directory where the project will be created.
         project_name (str): The name of the project to be created.
         model (str): The name of the pretrained model to be used.
-        path_to_videos (str): The path to the video files that will be used for training.
+        batch_size (int): The batch size to use when fine-tuning.
 
     Returns:
         None: This function does not return any value. It performs actions to create
@@ -42,19 +37,6 @@ def main(user, working_dir, project_name, model, path_to_videos):
     Raises:
         Exception: If there is an error during any of the steps in the process.
     """
-    # Create a project with a pre-trained model
-    dlc.create_pretrained_project(
-        project=project_name,
-        experimenter=user,
-        videos=[path_to_videos],
-        working_directory=working_dir,
-        model=model,
-        copy_videos=False,
-        filtered=False,  # False: frame-by-frame predictions
-        createlabeledvideo=True,
-        trainFraction=0.95  # 0.95 is the default
-    )
-
     config_path = get_config_path(working_dir=working_dir,
                                   project_name=project_name,
                                   user=user)
@@ -68,6 +50,17 @@ def main(user, working_dir, project_name, model, path_to_videos):
     #       (or similar)
     
     # Convert CSV to H5 format
+    # NOTE: This step is needed if the labeling was carried out
+    #       by some other user.
+    #       Unfortunately, this step is not sufficient to include/
+    #       use data labeled by others.
+    #       The additional steps (priort to running this) are:
+    #       - Remove the *.h5 file in each fo the video folders
+    #       - Rename the CollectedData_<otheruser>.csv to
+    #         CollectedData_<user>.csv
+    #       - Replace all occurencens of <otheruser> with <user>
+    #       - in each of the CollectedData_<user>.csv files
+    #       - Finally, run this scipt (or just dlc.convertcsv2h5)
     dlc.convertcsv2h5(config_path, scorer=user)
     
     # Check the labels
@@ -84,11 +77,14 @@ def main(user, working_dir, project_name, model, path_to_videos):
 
     # Train the network (fine-tuning)
     torch_params = dict(
-        batch_size=4,
+        batch_size=batch_size,
     )
     dlc.train_network(config=config_path, epochs=None, **torch_params)
 
-if __name__ == "__main__":
+def get_args():
+    """Fetch command line arguments
+    """
+
     parser = argparse.ArgumentParser(
         description="Posture tracking with a pretrained model and fine-tuning.",
         formatter_class=argparse.RawTextHelpFormatter
@@ -97,11 +93,28 @@ if __name__ == "__main__":
     parser.add_argument('--working_dir', type=str, default='/home/ml_user', help='Working directory for the project.')
     parser.add_argument('--project_name', type=str, default='PretrainedTracker', help='Name of the project.')
     parser.add_argument('--model', type=str, default='superanimal_topviewmouse', help='Pretrained model to use.')
-    parser.add_argument('--path_to_videos', type=str, default='/home/ml_user/data/samples', help='Path to the videos.')
+    parser.add_argument('--batch_size', type=int, default=2, help='The batch size to use when fine-tuning.')
 
     # Add example usage to the help message
     parser.epilog = (
         "Example usage:\n"
-        "  python your_script.py --user new_user --working_dir /home/new_user --project_name NewTracker "
-        "--model another_model --path_to_videos /path/to/videos\n"
-       
+        "  finetune_pretrained --user new_user --working_dir /home/new_user --project_name NewTracker "
+        "--model superanimal_topviewmouse --batch_size 8\n"
+    )
+
+    args = parser.parse_args()
+
+    return args
+
+def main():
+    """Script entrypoint
+    """
+    args = get_args()
+    finetune_pretrained(
+        user=args.user, working_dir=args.working_dir,
+        project_name=args.project_name, model=args.model,
+        batch_size=args.batch_size
+    )
+
+if __name__ == "__main__":
+    main()

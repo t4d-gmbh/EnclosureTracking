@@ -41,29 +41,33 @@ This script adds new video files to an existing DeepLabCut project.
 add_videos --user <username> --working_dir <path> --project_name <project_name> --videos_to_add <video1> <video2> ...
 ```
 
-### 3. `evaluate_pretrained`
+### 3. `finetune_pretrained`
+This script performs training (a fine-tuning) of the pretrained model.
+
+**Key Steps:**
+- Retrieve the configuration path for the specified project.
+- Converts labeled data to the required format.
+- Checks the labels for correctness.
+- Creates a training dataset by mapping markers.
+- Trains the network using the specified parameters.
+
+**Usage:**
+```
+finetune_pretrained --user <username> --working_dir <path> --project_name <project_name> --model <model_name> --batch_size <nbr>
+```
+
+### 4. `evaluate_pretrained`
 This script evaluates a trained DeepLabCut model.
 
 **Key Steps:**
 - Retrieve the configuration path for the specified project.
 - Evaluate the trained model using the specified configuration.
-
-**Usage:**
-```
-evaluate_pretrained --user <username> --working_dir <path> --project_name <project_name>
-```
-
-### 4. `finetune_pretrained`
-This script performs training (a fine-tuning) of the pretrained model.
-
-**Key Steps:**
-- Retrieve the configuration path for the specified project.
 - Analyze the specified videos to track individuals.
 - Create annotated videos to check the performance of the tracking.
 
 **Usage:**
 ```
-finetune_pretrained --user <username> --working_dir <path> --project_name <project_name> --model <model_name> --path_to_videos <path> --videos_to_analyze <video1> <video2> ...
+evaluate_pretrained --user <username> --working_dir <path> --project_name <project_name>
 ```
 
 ### 5. `track_individuals.py`
