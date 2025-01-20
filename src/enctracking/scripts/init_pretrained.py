@@ -16,7 +16,8 @@ from ..helpers import (
     get_config_path,
 )
 
-def init_pretrained(user:str, working_dir:str, project_name:str, model:str, path_to_videos:Collection):
+def init_pretrained(user:str, working_dir:str, project_name:str, model:str,
+                    path_to_videos:Collection, nbr_animals:int):
     """Create a DeepLabCut project using a pretrained model and prepare it for labeling.
 
     This function performs the following steps:
@@ -30,6 +31,7 @@ def init_pretrained(user:str, working_dir:str, project_name:str, model:str, path
         project_name (str): The name of the project to be created.
         model (str): The name of the pretrained model to be used.
         path_to_videos (str): The path to the video files that will be used for training.
+        nbr_animals (int): The maximal number of animals can be present at once in a video.
 
     Returns:
         None: This function does not return any value. It performs actions to create
@@ -60,7 +62,8 @@ def init_pretrained(user:str, working_dir:str, project_name:str, model:str, path
                                   project_name=project_name,
                                   user=user)
 
-    to_pretrained_multianimal(config_file=config_path, nbr_animals=12)
+    # convert the pretrained project ot a mulit-animal project
+    to_pretrained_multianimal(config_file=config_path, nbr_animals=nbr_animals)
 
     # Now we can go ahead and label data
 
@@ -73,13 +76,14 @@ def get_args():
     parser.add_argument('--project_name', type=str, default='PretrainedTracker', help='Name of the project.')
     parser.add_argument('--model', type=str, default='superanimal_topviewmouse', help='Pretrained model to use.')
     parser.add_argument('--path_to_videos', type=str, default='/home/ml_user/data/samples', help='Path to the videos.')
+    parser.add_argument('--nbr_animals', type=int, default=12, help='How many animals might be seen at once.')
 
     # Add example usage to the help message
     parser.epilog = (
         "Example usage:\n"
-        "  python your_script.py --user new_user --working_dir /home/new_user --project_name NewTracker\n"
-        "  python your_script.py --model another_model --path_to_videos /path/to/videos\n"
-        "  python your_script.py  # Use default values"
+        "  init_pretrained --user new_user --working_dir /home/new_user --project_name NewTracker --nbr_animals 7\n"
+        "  init_pretrained --model superanimal_topviewmouse --path_to_videos /path/to/videos\n"
+        "  init_pretrained  # Use default values"
     )
 
     args = parser.parse_args()
@@ -91,7 +95,7 @@ def main():
     args = get_args()
     init_pretrained(user=args.user, working_dir=args.working_dir,
          project_name=args.project_name, model=args.model,
-         path_to_videos=args.path_to_videos)
+         path_to_videos=args.path_to_videos, nbr_animals=args.nbr_animals)
 
 if __name__ == "__main__":
     main()

@@ -22,11 +22,7 @@ This script creates a new DeepLabCut project using a pretrained model and prepar
 
 **Key Steps:**
 - Create a project with a pretrained model.
-- Label images (recommended to be done using the GUI).
-- Convert labeled data to the required format.
-- Check the labels for correctness.
-- Create a training dataset by mapping markers.
-- Train the network using the specified parameters.
+- Convert the project into a multi-animal 
 
 **Usage:**
 ```
