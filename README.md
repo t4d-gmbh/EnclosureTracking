@@ -13,9 +13,11 @@ To install the necessary package that contains these scripts, you can use `pip` 
 pip install git+https://github.com/t4d-gmbh/EnclosureTracking.git@main
 ```
 
+Once installed you can run any of the scripts explained below directly in the command line.
+
 ## Scripts Overview
 
-### 1. `init_pretrained.py`
+### 1. `init_pretrained`
 This script creates a new DeepLabCut project using a pretrained model and prepares it for labeling.
 
 **Key Steps:**
@@ -28,7 +30,7 @@ This script creates a new DeepLabCut project using a pretrained model and prepar
 
 **Usage:**
 ```
-python -m enctracking.init_pretrained --user <username> --working_dir <path> --project_name <project_name> --model <model_name> --path_to_videos <path_to_videos>
+init_pretrained --user <username> --working_dir <path> --project_name <project_name> --model <model_name> --path_to_videos <path_to_videos>
 ```
 
 ### 2. `add_videos.py`

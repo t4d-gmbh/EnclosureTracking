@@ -5,6 +5,8 @@ This tries to follow:
 https://deeplabcut.github.io/DeepLabCut/docs/maDLC_UserGuide.html
 """
 
+from typing import Collection
+
 import os
 import glob
 import warnings
@@ -17,7 +19,7 @@ from ..helpers import (
     get_config_path,
 )
 
-def main(user, working_dir, project_name, model, path_to_videos):
+def init_pretrained(user:str, working_dir:str, project_name:str, model:str, path_to_videos:Collection):
     """Create a DeepLabCut project using a pretrained model and prepare it for labeling.
 
     This function performs the following steps:
@@ -60,7 +62,9 @@ def main(user, working_dir, project_name, model, path_to_videos):
 
     # Now we can go ahead and label data
 
-if __name__ == "__main__":
+def get_args():
+    """Fetch command line arguments
+    """
     parser = argparse.ArgumentParser(description="Posture tracking with a pretrained model.")
     parser.add_argument('--user', type=str, default='ml_user', help='Username for the project.')
     parser.add_argument('--working_dir', type=str, default='/home/ml_user', help='Working directory for the project.')
@@ -77,5 +81,15 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+    return args
 
-    main(args.user, args.working_dir, args.project_name, args.model, args.path_to_videos)
+def main():
+    """Script entrypoint
+    """
+    args = get_args()
+    init_pretrained(user=args.user, working_dir=args.working_dir,
+         project_name=args.project_name, model=args.model,
+         path_to_videos=args.path_to_videos)
+
+if __name__ == "__main__":
+    main()
